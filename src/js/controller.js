@@ -1,7 +1,6 @@
 import * as model from './model';
 import recipeView from './views/recipeView';
 
-
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -22,10 +21,12 @@ const controlRecipes = async function () {
 
     recipeView.render(model.state.recipe);
   } catch (err) {
-    alert(err);
+    console.log(err);
   }
 };
 
-['hashchange', 'load'].forEach(ev =>
-  window.addEventListener(ev, controlRecipes)
-);
+const init = function () {
+  recipeView.addHandlerRender(controlRecipes);
+};
+
+init();
