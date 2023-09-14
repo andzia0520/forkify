@@ -1,68 +1,19 @@
+import View from './View';
 import icons from '../../img/icons.svg';
 import { Fraction } from 'fractional';
 
-class RecipeView {
+class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
-  _data;
-  #errorMessage = `We couldn't found that recipe. Please try again!`;
-  #message = '';
-
-  render(data) {
-    this._data = data;
-    console.log(this._data);
-    const markUp = this.#generateMarkUp();
-    this.#clear;
-    this._parentElement.insertAdjacentHTML('afterbegin', markUp);
-  }
-
-  #clear() {
-    this._parentElement.innerHTML = '';
-  }
-
-  renderSpinner() {
-    const markUp = `
-    <div class="spinner">
-      <svg>
-        <use href="${icons}#icon-loader"></use>
-      </svg>
-    </div>`;
-    this.#clear();
-    this._parentElement.insertAdjacentHTML('afterbegin', markUp);
-  }
-
-  renderError(message = this.#errorMessage) {
-    const markUp = `<div class="error">
-        <div>
-          <svg>
-            <use href="${icons}#icon-alert-triangle"></use>
-          </svg>
-        </div>
-        <p>${message}</p>
-      </div>`;
-    this.#clear();
-    this._parentElement.insertAdjacentHTML('afterbegin', markUp);
-  }
-
-  renderMessage(message = this.#message) {
-    const markUp = `<div class="message">
-        <div>
-          <svg>
-            <use href="${icons}#icon-alert-triangle"></use>
-          </svg>
-        </div>
-        <p>${message}</p>
-      </div>`;
-    this.#clear();
-    this._parentElement.insertAdjacentHTML('afterbegin', markUp);
-  }
+  _errorMessage = `We couldn't found that recipe. Please try again!`;
+  _message = '';
 
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
   }
 
-  #generateMarkUp() {
-    return `
-      <figure class="recipe__fig">
+  _generateMarkUp() {
+    console.log(this._data);
+    return `<figure class="recipe__fig">
         <img src="${this._data.image}" alt="${
       this._data.image
     }" class="recipe__img" />
@@ -141,7 +92,8 @@ class RecipeView {
               <use href="${icons}#icon-arrow-right"></use>
             </svg>
           </a>
-        </div>`;
+        </div>
+        `;
   }
 
   _generateMarkupIngredient(ing) {
